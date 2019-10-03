@@ -32,4 +32,4 @@ git commit -m "Update $1 for v$2"
 git tag -fa "v$2" -m "v$2"
 
 # Push changes
-git push origin "$1"
+git push origin "$1" -f
