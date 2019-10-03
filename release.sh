@@ -13,14 +13,17 @@ fi
 # Checkout branch
 git checkout "$1"
 
+# Build files
+yarn run build
+
 # Remove all deps
 rm -rf ./node_modules
 
 # Only install prod deps
 yarn install --production
 
-# Add modules to git
-git add -f ./node_modules
+# Add files to git
+git add -f ./lib ./node_modules
 
 # Commit modules
 git commit -m "Update $1 for v$2"
