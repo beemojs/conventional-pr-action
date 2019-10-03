@@ -1,8 +1,10 @@
+# v0
 if [ "$1" == "" ]; then
     echo "Version branch required as first argument."
     exit
 fi
 
+# 0.0.0
 if [ "$2" == "" ]; then
     echo "Next version required as second argument."
     exit
