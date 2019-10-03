@@ -16,7 +16,6 @@ dist/
 esm/
 lib/
 tmp/
-node_modules/
 
 # Custom
 *.min.js
