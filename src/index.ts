@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/camelcase */
 
-import core from '@actions/core';
-import github from '@actions/github';
+import * as core from '@actions/core';
+import * as github from '@actions/github';
 import loadPreset from 'conventional-changelog-preset-loader';
 import parseCommit from 'conventional-commits-parser';
 
