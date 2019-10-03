@@ -1,0 +1,11 @@
+name: PR
+on: pull_request
+jobs:
+  conventional:
+    name: Conventional PR
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v1
+      - uses: beemojs/conventional-pr-action@v0
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
