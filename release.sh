@@ -22,6 +22,9 @@ yarn install --production
 # Add modules to git
 git add -f ./node_modules
 
+# Commit modules
+git commit -m "Update $1 for v$2"
+
 # Tag new version
 git tag -fa "v$2" -m "v$2"
 
