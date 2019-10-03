@@ -6,16 +6,10 @@
   "scripts": {
     "prepare": "beemo create-config --silent",
     "build": "beemo typescript",
-    "coverage": "yarn run jest --coverage",
-    "eslint": "beemo eslint",
-    "jest": "beemo jest",
+    "eslint": "beemo eslint ./src",
     "prettier": "beemo prettier",
-    "release": "npx np --yolo --no-yarn",
     "type": "beemo typescript --noEmit",
-    "prerelease": "yarn test && yarn run build",
-    "pretest": "yarn run type",
-    "test": "yarn run jest",
-    "posttest": "yarn run eslint"
+    "test": "yarn run type && yarn run eslint"
   },
   "repository": "https://github.com/beemojs/conventional-changelog-beemo",
   "author": "Miles Johnson",
@@ -26,9 +20,7 @@
   "beemo": {
     "module": "@milesj/build-tools",
     "drivers": [
-      "babel",
       "eslint",
-      "jest",
       "prettier",
       "typescript"
     ],

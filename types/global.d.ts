@@ -27,3 +27,8 @@ declare module 'conventional-commits-parser' {
 
   export default parser;
 }
+
+declare module '@octokit/graphql' {
+  export type Variables = {};
+  export type GraphQlQueryResponse = {};
+}
