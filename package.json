@@ -1,0 +1,28 @@
+{
+  "name": "conventional-pr-action",
+  "version": "1.0.0",
+  "description": "GitHub Action that validates the PR title and commits against a Conventional Commits preset.",
+  "main": "lib/index.js",
+  "scripts": {
+    "test": "jest"
+  },
+  "repository": "https://github.com/beemojs/conventional-changelog-beemo",
+  "author": "Miles Johnson",
+  "license": "MIT",
+  "beemo": {
+    "module": "@milesj/build-tools",
+    "drivers": [
+      "babel",
+      "eslint",
+      "jest",
+      "prettier",
+      "typescript"
+    ],
+    "settings": {
+      "node": true
+    }
+  },
+  "devDependencies": {
+    "@milesj/build-tools": "^0.57.0"
+  }
+}

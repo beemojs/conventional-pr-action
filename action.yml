@@ -1,0 +1,13 @@
+name: 'Conventional PR'
+description: 'Validate a PR title and commits against a Conventional Commits preset.'
+inputs:
+  config:
+    description: 'Name of conventional changelog config.'
+    required: false
+    default: 'beemo'
+outputs:
+  time: # id of output
+    description: 'The time we greeted you'
+runs:
+  using: 'node12'
+  main: 'index.js'
