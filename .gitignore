@@ -14,7 +14,6 @@ _book/
 coverage/
 dist/
 esm/
-lib/
 tmp/
 
 # Custom
