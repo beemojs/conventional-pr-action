@@ -1,13 +1,17 @@
 name: 'Conventional PR'
 description: 'Validate a PR title and commits against a Conventional Commits preset.'
 inputs:
-  config:
-    description: 'Name of conventional changelog config.'
+  config-preset:
+    description: 'Name of conventional changelog config preset.'
     required: false
     default: 'beemo'
-outputs:
-  time: # id of output
-    description: 'The time we greeted you'
+  require-multiple-commits:
+    description: 'Squash merges require multiple commits for the PR title to be preserved.'
+    required: false
+    default: true
 runs:
   using: 'node12'
-  main: 'index.js'
+  main: 'lib/index.js'
+branding:
+  icon: 'git-commit'
+  color: 'orange'
