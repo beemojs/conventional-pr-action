@@ -21,7 +21,7 @@ yarn install --production
 git add -f ./node_modules
 
 # Tag new version
-git tag -fa "$1" -m "v$2"
+git tag -fa "v$2" -m "v$2"
 
 # Push changes
 git push origin "$1"
