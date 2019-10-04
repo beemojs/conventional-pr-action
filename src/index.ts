@@ -1,7 +1,8 @@
-/* eslint-disable @typescript-eslint/camelcase */
+/* eslint-disable complexity, @typescript-eslint/camelcase */
 
 import * as core from '@actions/core';
 import * as github from '@actions/github';
+import { exec } from '@actions/exec';
 import loadPreset from 'conventional-changelog-preset-loader';
 import parseCommit from 'conventional-commits-parser';
 
@@ -26,8 +27,17 @@ async function run() {
       pull_number: issue.number,
     });
 
+    // Install preset
+    let preset = core.getInput('config-preset');
+
+    if (!preset.startsWith('conventional-changelog-')) {
+      preset = `conventional-changelog-${preset}`;
+    }
+
+    await exec('npm', ['install', preset]);
+
     // Verify the PR title against the preset
-    const config = loadPreset(core.getInput('config-preset'));
+    const config = loadPreset(preset);
     let result = null;
 
     if (typeof config.checkCommitFormat === 'function') {
