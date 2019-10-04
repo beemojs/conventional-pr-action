@@ -2,8 +2,6 @@
 
 import * as github from '@actions/github';
 import { getInput, setFailed } from '@actions/core';
-import { exec } from '@actions/exec';
-import { which } from '@actions/io';
 import loadPreset from 'conventional-changelog-preset-loader';
 import parseCommit from 'conventional-commits-parser';
 
@@ -29,21 +27,21 @@ async function run() {
     });
 
     // Install preset
-    let preset = getInput('config-preset');
-
-    if (!preset.startsWith('conventional-changelog-')) {
-      preset = `conventional-changelog-${preset}`;
-    }
+    let config: ReturnType<typeof loadPreset>;
 
     try {
-      await which('yarn', true);
-      await exec('yarn', ['add', preset]);
+      config = loadPreset(getInput('config-preset'));
     } catch {
-      await exec('npm', ['install', preset]);
+      let preset = getInput('config-preset');
+
+      if (!preset.startsWith('conventional-changelog-')) {
+        preset = `conventional-changelog-${preset}`;
+      }
+
+      throw new Error(`Preset "${preset}" does not exist.`);
     }
 
     // Verify the PR title against the preset
-    const config = loadPreset(getInput('config-preset'));
     let result = null;
 
     if (typeof config.checkCommitFormat === 'function') {
@@ -53,7 +51,7 @@ async function run() {
     }
 
     if (!result || !result.type) {
-      throw new Error('PR title requires a conventional changelog prefix.');
+      throw new Error("PR title doesn't follow conventional changelog format.");
     }
 
     // Verify commit integrity

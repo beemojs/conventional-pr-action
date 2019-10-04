@@ -5,8 +5,14 @@ GitHub Action that validates the PR title and commits against a
 
 ## Setup
 
-Create a `.github/workflows/pr.yml` file in your repository, with the following contents. Requires
-the `GITHUB_TOKEN` to be passed.
+Install your changelog preset as a dev dependency. For example:
+
+```
+yarn add --dev conventional-changelog-beemo
+```
+
+Create a `.github/workflows/pr.yml` file in your repository, with the following contents (the
+`GITHUB_TOKEN` environment variable is required).
 
 ```yaml
 name: PR
@@ -26,7 +32,7 @@ jobs:
 
 Supports the following input options:
 
-- `config-preset` - The conventional changelog config preset. Defaults to the
-  [Beemo preset](https://github.com/beemojs/conventional-changelog-beemo).
+- `config-preset` - The conventional changelog config preset. Defaults to
+  [`beemo`](https://github.com/beemojs/conventional-changelog-beemo).
 - `require-multiple-commits` - Validates the commits for use within squash merging. Defaults to
   `true`.
