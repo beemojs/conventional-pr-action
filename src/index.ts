@@ -1,8 +1,9 @@
 /* eslint-disable complexity, @typescript-eslint/camelcase */
 
-import * as core from '@actions/core';
 import * as github from '@actions/github';
+import { getInput, setFailed } from '@actions/core';
 import { exec } from '@actions/exec';
+import { which } from '@actions/io';
 import loadPreset from 'conventional-changelog-preset-loader';
 import parseCommit from 'conventional-commits-parser';
 
@@ -28,16 +29,21 @@ async function run() {
     });
 
     // Install preset
-    let preset = core.getInput('config-preset');
+    let preset = getInput('config-preset');
 
     if (!preset.startsWith('conventional-changelog-')) {
       preset = `conventional-changelog-${preset}`;
     }
 
-    await exec('npm', ['install', preset]);
+    try {
+      await which('yarn', true);
+      await exec('yarn', ['add', preset]);
+    } catch {
+      await exec('npm', ['install', preset]);
+    }
 
     // Verify the PR title against the preset
-    const config = loadPreset(preset);
+    const config = loadPreset(getInput('config-preset'));
     let result = null;
 
     if (typeof config.checkCommitFormat === 'function') {
@@ -51,7 +57,7 @@ async function run() {
     }
 
     // Verify commit integrity
-    if (core.getInput('require-multiple-commits') && pr.commits < 2) {
+    if (getInput('require-multiple-commits') && pr.commits < 2) {
       const { data: commits } = await octokit.pulls.listCommits({
         ...github.context.repo,
         pull_number: issue.number,
@@ -65,7 +71,7 @@ async function run() {
       }
     }
   } catch (error) {
-    core.setFailed(error.message);
+    setFailed(error.message);
   }
 }
 
