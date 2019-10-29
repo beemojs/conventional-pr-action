@@ -11,6 +11,8 @@ async function run() {
     const { GITHUB_TOKEN } = process.env;
     const { issue } = github.context;
 
+    console.log(process.cwd());
+
     if (!GITHUB_TOKEN) {
       throw new Error('A `GITHUB_TOKEN` environment variable is required.');
     }
