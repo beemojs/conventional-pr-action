@@ -1,9 +1,21 @@
 /* eslint-disable complexity, @typescript-eslint/camelcase */
 
+import fs from 'fs';
+import path from 'path';
 import * as github from '@actions/github';
 import { getInput, setFailed } from '@actions/core';
-import loadPreset from 'conventional-changelog-preset-loader';
+import loader from 'conventional-changelog-preset-loader';
 import parseCommit from 'conventional-commits-parser';
+
+// The action has a separate node modules than the repository,
+// so we need to require from the repository's node modules
+// using CWD, otherwise the module is not found.
+function requireModule(name: string) {
+  // eslint-disable-next-line
+  return require(require.resolve(name, {
+    paths: [path.join(process.cwd(), 'node_modules')],
+  }));
+}
 
 async function run() {
   try {
@@ -11,6 +23,7 @@ async function run() {
     const { GITHUB_TOKEN } = process.env;
     const { issue } = github.context;
 
+    console.log(fs.readdirSync(process.cwd()));
     console.log(process.cwd());
 
     if (!GITHUB_TOKEN) {
@@ -29,6 +42,7 @@ async function run() {
     });
 
     // Install preset
+    const loadPreset = loader.presetLoader(requireModule);
     let config: ReturnType<typeof loadPreset>;
 
     try {

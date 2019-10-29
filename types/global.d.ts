@@ -3,13 +3,22 @@ declare module 'conventional-changelog-preset-loader' {
     type: string;
   }
 
-  export default function load(name: string): {
+  type Load = (name: string) => {
     checkCommitFormat?: (commit: string) => Result | null | undefined;
     conventionalChangelog?: object;
     parserOpts?: object;
     recommendedBumpOpts?: object;
     writerOpts?: object;
   };
+
+  interface Loader {
+    presetLoader: (requireMethod: NodeRequireFunction) => Load;
+    (name: string): ReturnType<Load>;
+  }
+
+  const loader: Loader;
+
+  export default loader;
 }
 
 declare module 'conventional-commits-parser' {
