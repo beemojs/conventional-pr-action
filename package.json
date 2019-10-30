@@ -1,7 +1,7 @@
 {
   "name": "conventional-pr-action",
   "version": "1.0.0",
-  "description": "GitHub Action that validates the PR title and commits against a Conventional Commits preset.",
+  "description": "GitHub Action that validates the PR title against a Conventional Commits preset.",
   "main": "./lib/index.js",
   "scripts": {
     "prepare": "beemo create-config --silent",
@@ -29,8 +29,7 @@
     }
   },
   "devDependencies": {
-    "@milesj/build-tools": "^0.57.0",
-    "conventional-changelog-beemo": "^1.5.1"
+    "@milesj/build-tools": "^0.57.0"
   },
   "dependencies": {
     "@actions/core": "^1.1.3",

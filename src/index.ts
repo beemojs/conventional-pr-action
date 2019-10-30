@@ -1,6 +1,5 @@
 /* eslint-disable complexity, @typescript-eslint/camelcase */
 
-import fs from 'fs';
 import path from 'path';
 import * as github from '@actions/github';
 import { getInput, setFailed } from '@actions/core';
@@ -23,9 +22,6 @@ async function run() {
     const { GITHUB_TOKEN } = process.env;
     const { issue } = github.context;
 
-    console.log(fs.readdirSync(process.cwd()));
-    console.log(process.cwd());
-
     if (!GITHUB_TOKEN) {
       throw new Error('A `GITHUB_TOKEN` environment variable is required.');
     }
@@ -43,13 +39,12 @@ async function run() {
 
     // Install preset
     const loadPreset = loader.presetLoader(requireModule);
+    let preset = getInput('config-preset');
     let config: ReturnType<typeof loadPreset>;
 
     try {
-      config = loadPreset(getInput('config-preset'));
+      config = loadPreset(preset);
     } catch {
-      let preset = getInput('config-preset');
-
       if (!preset.startsWith('conventional-changelog-')) {
         preset = `conventional-changelog-${preset}`;
       }

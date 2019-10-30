@@ -1,11 +1,11 @@
 # conventional-pr-action
 
-GitHub Action that validates the PR title and commits against a
+GitHub Action that validates the PR title against a
 [Conventional Commits](https://www.conventionalcommits.org) preset.
 
 ## Setup
 
-Install your changelog preset as a dev dependency. For example:
+Install your changelog preset as a dev dependency in your application. For example:
 
 ```
 yarn add --dev conventional-changelog-beemo

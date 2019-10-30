@@ -1,5 +1,5 @@
 name: 'Conventional PR'
-description: 'Validate a PR title and commits against a Conventional Commits preset.'
+description: 'Validate a PR title against a Conventional Commits preset.'
 inputs:
   config-preset:
     description: 'Name of conventional changelog config preset.'
