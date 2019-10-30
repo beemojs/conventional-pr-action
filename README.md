@@ -23,6 +23,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v1
+      - uses: actions/setup-node@v1
+      - run: yarn install
       - uses: beemojs/conventional-pr-action@v1
         with:
           config-preset: 'beemo'
