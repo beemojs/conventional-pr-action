@@ -1,10 +1,13 @@
 /* eslint-disable complexity */
 
+import fs from 'fs';
 import path from 'path';
 import { context, getOctokit } from '@actions/github';
 import { getInput, setFailed } from '@actions/core';
 import loader from 'conventional-changelog-preset-loader';
 import parseCommit from 'conventional-commits-parser';
+
+const CWD = process.env.GITHUB_WORKSPACE!;
 
 // The action has a separate node modules than the repository,
 // so we need to require from the repository's node modules
@@ -61,6 +64,8 @@ async function run() {
 
       throw new Error(`Preset "${preset}" does not exist.`);
     }
+
+    console.log(fs.readFileSync(path.join(CWD, 'package.json'), 'utf8'));
 
     // Verify the PR title against the preset
     let result = null;
