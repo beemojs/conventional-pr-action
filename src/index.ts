@@ -23,7 +23,6 @@ async function run() {
   try {
     console.log('PWD', process.env.PWD, process.cwd());
     console.log('GITHUB_WORKSPACE', process.env.GITHUB_WORKSPACE);
-    console.log('CONTEXT', context);
 
     // Verify context
     const { GITHUB_TOKEN } = process.env;
@@ -50,10 +49,11 @@ async function run() {
 
     // Install preset
     const loadPreset = loader.presetLoader(requireModule);
-    let preset = getInput('config-preset');
+    let preset = getInput('config-preset') || 'beemo';
     let config: ReturnType<typeof loadPreset>;
 
     console.log('PRESET', preset);
+    console.log(fs.readFileSync(path.join(CWD, 'package.json'), 'utf8'));
 
     try {
       config = loadPreset(preset);
@@ -64,8 +64,6 @@ async function run() {
 
       throw new Error(`Preset "${preset}" does not exist.`);
     }
-
-    console.log(fs.readFileSync(path.join(CWD, 'package.json'), 'utf8'));
 
     // Verify the PR title against the preset
     let result = null;
