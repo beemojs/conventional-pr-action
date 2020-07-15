@@ -20,6 +20,14 @@ function requireModule(name: string) {
   }));
 }
 
+async function installPresetPackage(pkg: string, version: string) {
+  if (fs.existsSync(path.join(CWD, 'yarn.lock'))) {
+    await exec('yarn', ['add', '@boost/common'], { cwd: CWD });
+  } else {
+    await exec('npm', ['install', '@boost/common'], { cwd: CWD });
+  }
+}
+
 async function run() {
   try {
     console.log('PWD', process.env.PWD, process.cwd());
@@ -50,22 +58,22 @@ async function run() {
 
     // Install preset
     const loadPreset = loader.presetLoader(requireModule);
-    let preset = getInput('config-preset') || 'beemo';
+    const version = getInput('config-version') || 'latest';
+    const preset = getInput('config-preset') || 'beemo';
+    const presetModule = preset.startsWith('conventional-changelog-')
+      ? preset
+      : `conventional-changelog-${preset}`;
     let config: ReturnType<typeof loadPreset>;
 
-    exec('yarn', ['add', '@boost/common']);
+    await installPresetPackage(presetModule, version);
 
-    console.log('PRESET', preset);
+    console.log('PRESET', preset, version);
     console.log(fs.readFileSync(path.join(CWD, 'package.json'), 'utf8'));
 
     try {
       config = loadPreset(preset);
     } catch {
-      if (!preset.startsWith('conventional-changelog-')) {
-        preset = `conventional-changelog-${preset}`;
-      }
-
-      throw new Error(`Preset "${preset}" does not exist.`);
+      throw new Error(`Preset "${presetModule}" does not exist.`);
     }
 
     // Verify the PR title against the preset

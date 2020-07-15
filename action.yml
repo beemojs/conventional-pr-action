@@ -5,6 +5,10 @@ inputs:
     description: 'Name of conventional changelog config preset.'
     required: false
     default: 'beemo'
+  config-version:
+    description: 'Version of config package to install.'
+    required: false
+    default: 'latest'
   require-multiple-commits:
     description: 'Squash merges require multiple commits for the PR title to be preserved.'
     required: false
