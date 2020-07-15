@@ -1,4 +1,4 @@
-/* eslint-disable complexity, @typescript-eslint/camelcase */
+/* eslint-disable complexity */
 
 import path from 'path';
 import github from '@actions/github';
@@ -84,4 +84,5 @@ async function run() {
   }
 }
 
+// eslint-disable-next-line @typescript-eslint/no-floating-promises
 run();

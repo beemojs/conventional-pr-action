@@ -12,7 +12,7 @@ declare module 'conventional-changelog-preset-loader' {
   };
 
   interface Loader {
-    presetLoader: (requireMethod: NodeRequireFunction) => Load;
+    presetLoader: (requireMethod: (name: string) => any) => Load;
     (name: string): ReturnType<Load>;
   }
 
@@ -38,6 +38,10 @@ declare module 'conventional-commits-parser' {
 }
 
 declare module '@octokit/graphql' {
+  interface GQL {}
+
+  export const graphql: GQL;
+
   export type Variables = {};
   export type GraphQlQueryResponse = {};
 }
