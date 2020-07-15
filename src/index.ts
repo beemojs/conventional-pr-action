@@ -34,7 +34,7 @@ async function installPresetPackage(name: string, version: string) {
 
 async function run() {
   try {
-    info('Loading GitHub context and PR');
+    info('Loading GitHub context and pull request');
 
     // Verify context
     const { GITHUB_TOKEN } = process.env;
@@ -62,9 +62,9 @@ async function run() {
       ? preset
       : `conventional-changelog-${preset}`;
 
-    if (getInput('auto-install') ?? true) {
-      await installPresetPackage(presetModule, version);
-    }
+    // if (getInput('auto-install')) {
+    await installPresetPackage(presetModule, version);
+    // }
 
     // Load preset
     info('Loading preset package');
@@ -79,7 +79,7 @@ async function run() {
     }
 
     // Verify the PR title against the preset
-    info('Validating PR against preset');
+    info('Validating pull request against preset');
 
     let result = null;
 
