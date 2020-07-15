@@ -1,10 +1,14 @@
 /* eslint-disable complexity */
 
+import fs from 'fs';
 import path from 'path';
-import github from '@actions/github';
-import { getInput, setFailed } from '@actions/core';
+import { context, getOctokit } from '@actions/github';
+import { getInput, setFailed, info, startGroup, endGroup } from '@actions/core';
+import { exec } from '@actions/exec';
 import loader from 'conventional-changelog-preset-loader';
 import parseCommit from 'conventional-commits-parser';
+
+const CWD = process.env.GITHUB_WORKSPACE!;
 
 // The action has a separate node modules than the repository,
 // so we need to require from the repository's node modules
@@ -12,15 +16,31 @@ import parseCommit from 'conventional-commits-parser';
 function requireModule(name: string) {
   // eslint-disable-next-line
   return require(require.resolve(name, {
-    paths: [path.join(process.cwd(), 'node_modules')],
+    paths: [path.join(CWD, 'node_modules')],
   }));
+}
+
+async function installPresetPackage(name: string, version: string) {
+  const pkg = `${name}@${version}`;
+
+  startGroup(`Installing ${pkg} preset package`);
+
+  if (fs.existsSync(path.join(CWD, 'yarn.lock'))) {
+    await exec('yarn', ['add', pkg], { cwd: CWD });
+  } else {
+    await exec('npm', ['install', pkg], { cwd: CWD });
+  }
+
+  endGroup();
 }
 
 async function run() {
   try {
+    info('Loading GitHub context and pull request');
+
     // Verify context
     const { GITHUB_TOKEN } = process.env;
-    const { issue } = github.context;
+    const { issue } = context;
 
     if (!GITHUB_TOKEN) {
       throw new Error('A `GITHUB_TOKEN` environment variable is required.');
@@ -31,28 +51,38 @@ async function run() {
     }
 
     // Load PR
-    const octokit = github.getOctokit(GITHUB_TOKEN);
+    const octokit = getOctokit(GITHUB_TOKEN);
     const { data: pr } = await octokit.pulls.get({
-      ...github.context.repo,
+      ...context.repo,
       pull_number: issue.number,
     });
 
     // Install preset
+    const version = getInput('config-version') || 'latest';
+    const preset = getInput('config-preset') || 'beemo';
+    const presetModule = preset.startsWith('conventional-changelog-')
+      ? preset
+      : `conventional-changelog-${preset}`;
+
+    if (getInput('auto-install')) {
+      await installPresetPackage(presetModule, version);
+    }
+
+    // Load preset
+    info('Loading preset package');
+
     const loadPreset = loader.presetLoader(requireModule);
-    let preset = getInput('config-preset');
     let config: ReturnType<typeof loadPreset>;
 
     try {
       config = loadPreset(preset);
     } catch {
-      if (!preset.startsWith('conventional-changelog-')) {
-        preset = `conventional-changelog-${preset}`;
-      }
-
-      throw new Error(`Preset "${preset}" does not exist.`);
+      throw new Error(`Preset "${presetModule}" does not exist.`);
     }
 
     // Verify the PR title against the preset
+    info('Validating pull request against preset');
+
     let result = null;
 
     if (typeof config.checkCommitFormat === 'function') {
@@ -67,8 +97,10 @@ async function run() {
 
     // Verify commit integrity
     if (getInput('require-multiple-commits') && pr.commits < 2) {
+      info('Checking for multiple commits');
+
       const { data: commits } = await octokit.pulls.listCommits({
-        ...github.context.repo,
+        ...context.repo,
         pull_number: issue.number,
       });
 
