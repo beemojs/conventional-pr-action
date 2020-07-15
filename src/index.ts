@@ -18,6 +18,9 @@ function requireModule(name: string) {
 
 async function run() {
   try {
+    console.log('PWD', process.env.PWD, process.cwd());
+    console.log('GITHUB_WORKSPACE', process.env.GITHUB_WORKSPACE);
+
     // Verify context
     const { GITHUB_TOKEN } = process.env;
     const { issue } = github.context;
@@ -30,6 +33,8 @@ async function run() {
       throw new Error('Action may only be ran in the context of a pull request.');
     }
 
+    console.log('ISSUE', issue.number);
+
     // Load PR
     const octokit = github.getOctokit(GITHUB_TOKEN);
     const { data: pr } = await octokit.pulls.get({
@@ -37,10 +42,14 @@ async function run() {
       pull_number: issue.number,
     });
 
+    console.log('TITLE', pr.title);
+
     // Install preset
     const loadPreset = loader.presetLoader(requireModule);
     let preset = getInput('config-preset');
     let config: ReturnType<typeof loadPreset>;
+
+    console.log('PRESET', preset);
 
     try {
       config = loadPreset(preset);
