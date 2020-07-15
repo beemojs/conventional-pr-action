@@ -56,7 +56,6 @@ async function run() {
     });
 
     // Install preset
-    // const loadPreset = loader.presetLoader(requireModule);
     const version = getInput('config-version') || 'latest';
     const preset = getInput('config-preset') || 'beemo';
     const presetModule = preset.startsWith('conventional-changelog-')
@@ -70,10 +69,11 @@ async function run() {
     // Load preset
     info('Loading preset package');
 
+    const loadPreset = loader.presetLoader(requireModule);
     let config: ReturnType<any>;
 
     try {
-      config = loader(preset);
+      config = loadPreset(preset);
     } catch {
       throw new Error(`Preset "${presetModule}" does not exist.`);
     }
