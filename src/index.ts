@@ -1,7 +1,7 @@
 /* eslint-disable complexity */
 
 import path from 'path';
-import github from '@actions/github';
+import { context, getOctokit } from '@actions/github';
 import { getInput, setFailed } from '@actions/core';
 import loader from 'conventional-changelog-preset-loader';
 import parseCommit from 'conventional-commits-parser';
@@ -20,10 +20,11 @@ async function run() {
   try {
     console.log('PWD', process.env.PWD, process.cwd());
     console.log('GITHUB_WORKSPACE', process.env.GITHUB_WORKSPACE);
+    console.log('CONTEXT', context);
 
     // Verify context
     const { GITHUB_TOKEN } = process.env;
-    const { issue } = github.context;
+    const { issue } = context;
 
     if (!GITHUB_TOKEN) {
       throw new Error('A `GITHUB_TOKEN` environment variable is required.');
@@ -36,9 +37,9 @@ async function run() {
     console.log('ISSUE', issue.number);
 
     // Load PR
-    const octokit = github.getOctokit(GITHUB_TOKEN);
+    const octokit = getOctokit(GITHUB_TOKEN);
     const { data: pr } = await octokit.pulls.get({
-      ...github.context.repo,
+      ...context.repo,
       pull_number: issue.number,
     });
 
@@ -77,7 +78,7 @@ async function run() {
     // Verify commit integrity
     if (getInput('require-multiple-commits') && pr.commits < 2) {
       const { data: commits } = await octokit.pulls.listCommits({
-        ...github.context.repo,
+        ...context.repo,
         pull_number: issue.number,
       });
 
