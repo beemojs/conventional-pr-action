@@ -29,7 +29,8 @@
     }
   },
   "devDependencies": {
-    "@milesj/build-tools": "^2.9.0"
+    "@milesj/build-tools": "^2.9.0",
+    "conventional-changelog-beemo": "^1.6.0"
   },
   "dependencies": {
     "@actions/core": "^1.2.4",
