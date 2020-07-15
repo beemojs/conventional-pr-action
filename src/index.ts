@@ -4,6 +4,7 @@ import fs from 'fs';
 import path from 'path';
 import { context, getOctokit } from '@actions/github';
 import { getInput, setFailed } from '@actions/core';
+import { exec } from '@actions/exec';
 import loader from 'conventional-changelog-preset-loader';
 import parseCommit from 'conventional-commits-parser';
 
@@ -51,6 +52,8 @@ async function run() {
     const loadPreset = loader.presetLoader(requireModule);
     let preset = getInput('config-preset') || 'beemo';
     let config: ReturnType<typeof loadPreset>;
+
+    exec('yarn', ['add', '@boost/common']);
 
     console.log('PRESET', preset);
     console.log(fs.readFileSync(path.join(CWD, 'package.json'), 'utf8'));
