@@ -8,11 +8,6 @@ jobs:
       - uses: actions/checkout@v2
       - uses: actions/setup-node@v2-beta
       - run: yarn install
-      # - uses: beemojs/conventional-pr-action@v1
-      #   env:
-      #     GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      - run: yarn build
-      - run: yarn add lodash
-      - run: node lib/index.js
+      - uses: beemojs/conventional-pr-action@v1
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
