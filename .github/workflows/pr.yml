@@ -11,5 +11,6 @@ jobs:
       # - uses: beemojs/conventional-pr-action@v1
       #   env:
       #     GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      - run: node log.js
-      - run: 'echo $CWD'
+      - run: 'echo $PWD'
+      - run: 'echo $GITHUB_WORKSPACE'
+      - run: yarn add lodash --verbose
