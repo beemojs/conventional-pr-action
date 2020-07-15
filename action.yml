@@ -1,6 +1,10 @@
 name: 'Conventional PR'
 description: 'Validate a PR title against a Conventional Commits preset.'
 inputs:
+  auto-install:
+    description: 'Auto-install the conventional changelog config package.'
+    required: false
+    default: true
   config-preset:
     description: 'Name of conventional changelog config preset.'
     required: false
