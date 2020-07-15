@@ -62,6 +62,8 @@ async function run() {
       ? preset
       : `conventional-changelog-${preset}`;
 
+    console.log(getInput('auto-install'), getInput('autoInstall'));
+
     if (getInput('auto-install')) {
       await installPresetPackage(presetModule, version);
     }
