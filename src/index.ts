@@ -1,7 +1,7 @@
 /* eslint-disable complexity, @typescript-eslint/camelcase */
 
 import path from 'path';
-import * as github from '@actions/github';
+import github from '@actions/github';
 import { getInput, setFailed } from '@actions/core';
 import loader from 'conventional-changelog-preset-loader';
 import parseCommit from 'conventional-commits-parser';
@@ -31,7 +31,7 @@ async function run() {
     }
 
     // Load PR
-    const octokit = new github.GitHub(GITHUB_TOKEN);
+    const octokit = github.getOctokit(GITHUB_TOKEN);
     const { data: pr } = await octokit.pulls.get({
       ...github.context.repo,
       pull_number: issue.number,
