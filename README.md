@@ -22,8 +22,8 @@ jobs:
     name: Conventional PR
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v1
-      - uses: actions/setup-node@v1
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v2-beta
       - run: yarn install
       - uses: beemojs/conventional-pr-action@v1
         with:
