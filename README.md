@@ -25,7 +25,7 @@ jobs:
       - uses: actions/checkout@v2
       - uses: actions/setup-node@v2-beta
       - run: yarn install
-      - uses: beemojs/conventional-pr-action@v1
+      - uses: beemojs/conventional-pr-action@v2
         with:
           config-preset: 'beemo'
         env:
