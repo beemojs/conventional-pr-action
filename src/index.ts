@@ -3,7 +3,7 @@
 import fs from 'fs';
 import path from 'path';
 import { context, getOctokit } from '@actions/github';
-import { getInput, setFailed, info } from '@actions/core';
+import { getInput, setFailed, info, startGroup, endGroup } from '@actions/core';
 import { exec } from '@actions/exec';
 import loader from 'conventional-changelog-preset-loader';
 import parseCommit from 'conventional-commits-parser';
@@ -23,13 +23,15 @@ function requireModule(name: string) {
 async function installPresetPackage(name: string, version: string) {
   const pkg = `${name}@${version}`;
 
-  info(`Installing ${pkg} preset package`);
+  startGroup(`Installing ${pkg} preset package`);
 
   if (fs.existsSync(path.join(CWD, 'yarn.lock'))) {
     await exec('yarn', ['add', pkg], { cwd: CWD });
   } else {
     await exec('npm', ['install', pkg], { cwd: CWD });
   }
+
+  endGroup();
 }
 
 async function run() {
@@ -62,15 +64,15 @@ async function run() {
       ? preset
       : `conventional-changelog-${preset}`;
 
-    // if (getInput('auto-install')) {
-    await installPresetPackage(presetModule, version);
-    // }
+    if (getInput('auto-install')) {
+      await installPresetPackage(presetModule, version);
+    }
 
     // Load preset
     info('Loading preset package');
 
     const loadPreset = loader.presetLoader(requireModule);
-    let config: ReturnType<any>;
+    let config: ReturnType<typeof loadPreset>;
 
     try {
       config = loadPreset(preset);
