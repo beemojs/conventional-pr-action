@@ -5,8 +5,8 @@ GitHub Action that validates the PR title against a
 
 ## Setup
 
-Create a `.github/workflows/pr.yml` file in your repository, with the following contents (the
-`GITHUB_TOKEN` environment variable is required).
+Create a `.github/workflows/pr.yml` file in your repository, with the following contents. The
+`GITHUB_TOKEN` environment variable and v2 actions _are_ required.
 
 ```yaml
 name: PR
@@ -20,8 +20,6 @@ jobs:
       - uses: actions/setup-node@v2-beta
       - run: yarn install
       - uses: beemojs/conventional-pr-action@v2
-        with:
-          config-preset: 'beemo'
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 ```
