@@ -2,7 +2,7 @@ name: 'Conventional PR'
 description: 'Validate a PR title against a Conventional Commits preset.'
 inputs:
   auto-install:
-    description: 'Auto-install the conventional changelog config package.'
+    description: 'Auto-install dependencies and the conventional changelog config package.'
     required: false
     default: true
   config-preset:
@@ -10,7 +10,7 @@ inputs:
     required: false
     default: 'beemo'
   config-version:
-    description: 'Version of config package to install.'
+    description: 'Version of conventional changelog config package to install.'
     required: false
     default: 'latest'
   require-multiple-commits:

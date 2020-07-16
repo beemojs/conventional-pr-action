@@ -20,13 +20,46 @@ function requireModule(name: string) {
   }));
 }
 
-async function installPresetPackage(name: string, version: string) {
-  const pkg = `${name}@${version}`;
+let pm: 'yarn' | 'pnpm' | 'npm';
 
-  startGroup(`Installing ${pkg} preset package`);
+function detectPackageManager() {
+  if (pm) {
+    return pm;
+  }
 
   if (fs.existsSync(path.join(CWD, 'yarn.lock'))) {
-    await exec('yarn', ['add', pkg], { cwd: CWD });
+    pm = 'yarn';
+  } else if (fs.existsSync(path.join(CWD, 'pnpm-lock.yaml'))) {
+    pm = 'pnpm';
+  } else {
+    pm = 'npm';
+  }
+
+  return pm;
+}
+
+async function installPackages() {
+  const bin = detectPackageManager();
+
+  startGroup(`Installing dependencies with ${bin}`);
+
+  if (bin === 'yarn' || bin === 'pnpm') {
+    await exec(bin, ['install', '--frozen-lockfile'], { cwd: CWD });
+  } else {
+    await exec('npm', ['ci'], { cwd: CWD });
+  }
+
+  endGroup();
+}
+
+async function installPresetPackage(name: string, version: string) {
+  const bin = detectPackageManager();
+  const pkg = `${name}@${version}`;
+
+  startGroup(`Installing preset package ${pkg}`);
+
+  if (bin === 'yarn' || bin === 'pnpm') {
+    await exec(bin, ['add', pkg], { cwd: CWD });
   } else {
     await exec('npm', ['install', pkg], { cwd: CWD });
   }
@@ -57,6 +90,13 @@ async function run() {
       pull_number: issue.number,
     });
 
+    // Install dependencies
+    const autoInstall = getInput('auto-install');
+
+    if (autoInstall) {
+      await installPackages();
+    }
+
     // Install preset
     const version = getInput('config-version') || 'latest';
     const preset = getInput('config-preset') || 'beemo';
@@ -64,7 +104,7 @@ async function run() {
       ? preset
       : `conventional-changelog-${preset}`;
 
-    if (getInput('auto-install')) {
+    if (autoInstall) {
       await installPresetPackage(presetModule, version);
     }
 
