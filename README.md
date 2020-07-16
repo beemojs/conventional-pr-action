@@ -1,11 +1,11 @@
 # conventional-pr-action
 
-GitHub Action that validates the PR title against a
+GitHub Action that validates a pull request title against a
 [Conventional Commits](https://www.conventionalcommits.org) preset.
 
 ## Setup
 
-Create a `.github/workflows/pr.yml` file in your repository, with the following contents. The
+Create a `.github/workflows/pr.yml` file in your repository with the following contents. The
 `GITHUB_TOKEN` environment variable and v2 actions _are_ required.
 
 ```yaml
@@ -18,7 +18,6 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - uses: actions/setup-node@v2-beta
-      - run: yarn install
       - uses: beemojs/conventional-pr-action@v2
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

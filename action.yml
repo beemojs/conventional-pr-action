@@ -1,5 +1,5 @@
-name: 'Conventional PR'
-description: 'Validate a PR title against a Conventional Commits preset.'
+name: 'Conventional Commits PR'
+description: 'Validate a pull request title against a Conventional Commits preset.'
 inputs:
   auto-install:
     description: 'Auto-install dependencies and the conventional changelog config package.'
@@ -21,5 +21,5 @@ runs:
   using: 'node12'
   main: 'lib/index.js'
 branding:
-  icon: 'git-commit'
-  color: 'orange'
+  icon: 'git-pull-request'
+  color: 'red'
