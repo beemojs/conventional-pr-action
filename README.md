@@ -1,6 +1,6 @@
 # conventional-pr-action
 
-GitHub Action that validates the PR title against a
+GitHub Action that validates a pull request title against a
 [Conventional Commits](https://www.conventionalcommits.org) preset.
 
 ## Setup
