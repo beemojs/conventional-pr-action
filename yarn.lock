@@ -2569,11 +2569,6 @@ contains-path@^0.1.0:
   resolved "https://registry.npmjs.org/contains-path/-/contains-path-0.1.0.tgz#fe8cf184ff6670b6baef01a9d4861a5cbec4120a"
   integrity sha1-/ozxhP9mcLa67wGp1IYaXL7EEgo=
 
-conventional-changelog-beemo@^1.6.0:
-  version "1.6.0"
-  resolved "https://registry.yarnpkg.com/conventional-changelog-beemo/-/conventional-changelog-beemo-1.6.0.tgz#a528d8108123715ee0cbffbc93cd31ec98d00e46"
-  integrity sha512-H3T07JUWn5YnaLIXK8rywMXqdWhbStpJV/wIZaUxdhznRZhswxJI49oUHzAaAlctCFHv2sdJcJsnofDpu3U9lg==
-
 conventional-changelog-preset-loader@^2.3.4:
   version "2.3.4"
   resolved "https://registry.yarnpkg.com/conventional-changelog-preset-loader/-/conventional-changelog-preset-loader-2.3.4.tgz#14a855abbffd59027fd602581f1f34d9862ea44c"
