@@ -67,9 +67,14 @@ async function installPresetPackage(name: string, version: string) {
 
   // Yarn
   if (bin === 'yarn') {
+    console.log(getPackageJson());
+    console.log('workspaces' in getPackageJson());
+
     if ('workspaces' in getPackageJson()) {
       args.push('-W');
     }
+
+    console.log(args);
 
     await exec('yarn', args, { cwd: CWD });
 

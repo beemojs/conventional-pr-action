@@ -7,6 +7,11 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - uses: actions/setup-node@v2-beta
-      - uses: beemojs/conventional-pr-action@v2
+      # - uses: beemojs/conventional-pr-action@v2
+      #   env:
+      #     GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - run: yarn install
+      - run: yarn build
+      - run: node ./lib/index.js
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
