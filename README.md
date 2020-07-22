@@ -32,4 +32,4 @@ Supports the following input options:
 - `config-version` - The conventional changelog config preset package version to install. Defaults
   to `latest`.
 - `require-multiple-commits` - Validates the commits for use within squash merging. Defaults to
-  `true`.
+  `false`.

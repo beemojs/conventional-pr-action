@@ -16,7 +16,7 @@ inputs:
   require-multiple-commits:
     description: 'Squash merges require multiple commits for the PR title to be preserved.'
     required: false
-    default: true
+    default: false
 runs:
   using: 'node12'
   main: 'lib/index.js'
