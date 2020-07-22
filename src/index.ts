@@ -10,14 +10,16 @@ import parseCommit from 'conventional-commits-parser';
 
 const CWD = process.env.GITHUB_WORKSPACE!;
 
+function getPath(part: string): string {
+  return path.join(CWD, part);
+}
+
 // The action has a separate node modules than the repository,
 // so we need to require from the repository's node modules
 // using CWD, otherwise the module is not found.
 function requireModule(name: string) {
   // eslint-disable-next-line
-  return require(require.resolve(name, {
-    paths: [path.join(CWD, 'node_modules')],
-  }));
+  return require(require.resolve(name, { paths: [getPath('node_modules')] }));
 }
 
 let pm: 'yarn' | 'pnpm' | 'npm';
@@ -27,15 +29,19 @@ function detectPackageManager() {
     return pm;
   }
 
-  if (fs.existsSync(path.join(CWD, 'yarn.lock'))) {
+  if (fs.existsSync(getPath('yarn.lock'))) {
     pm = 'yarn';
-  } else if (fs.existsSync(path.join(CWD, 'pnpm-lock.yaml'))) {
+  } else if (fs.existsSync(getPath('pnpm-lock.yaml'))) {
     pm = 'pnpm';
   } else {
     pm = 'npm';
   }
 
   return pm;
+}
+
+function getPackageJson(): object {
+  return JSON.parse(fs.readFileSync(getPath('package.json'), 'utf8'));
 }
 
 async function installPackages() {
@@ -55,13 +61,29 @@ async function installPackages() {
 async function installPresetPackage(name: string, version: string) {
   const bin = detectPackageManager();
   const pkg = `${name}@${version}`;
+  const args = [bin === 'npm' ? 'install' : 'add', pkg];
 
   startGroup(`Installing preset package ${pkg}`);
 
-  if (bin === 'yarn' || bin === 'pnpm') {
-    await exec(bin, ['add', pkg], { cwd: CWD });
+  // Yarn
+  if (bin === 'yarn') {
+    if ('workspaces' in getPackageJson()) {
+      args.push('-W');
+    }
+
+    await exec('yarn', args, { cwd: CWD });
+
+    // PNPM
+  } else if (bin === 'pnpm') {
+    if (fs.existsSync(getPath('pnpm-workspace.yaml'))) {
+      args.push('-W');
+    }
+
+    await exec('pnpm', args, { cwd: CWD });
+
+    // NPM
   } else {
-    await exec('npm', ['install', pkg], { cwd: CWD });
+    await exec('npm', args, { cwd: CWD });
   }
 
   endGroup();
