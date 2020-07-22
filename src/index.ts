@@ -118,7 +118,7 @@ async function run() {
     });
 
     // Install dependencies
-    const autoInstall = getInput('auto-install');
+    const autoInstall = getInput('auto-install') || true;
 
     if (autoInstall) {
       await installPackages();
