@@ -13,5 +13,7 @@ jobs:
       - run: yarn install
       - run: yarn build
       - run: node ./lib/index.js
+        with:
+          auto-install: true
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
