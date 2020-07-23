@@ -67,22 +67,17 @@ async function installPresetPackage(name: string, version: string) {
 
   // Yarn
   if (bin === 'yarn') {
-    console.log(getPackageJson());
-    console.log('workspaces' in getPackageJson());
-
     if ('workspaces' in getPackageJson()) {
-      info('Workspace detected, installing to root');
+      info('Workspaces detected, installing to root');
       args.push('-W');
     }
-
-    console.log(args);
 
     await exec('yarn', args, { cwd: CWD });
 
     // PNPM
   } else if (bin === 'pnpm') {
     if (fs.existsSync(getPath('pnpm-workspace.yaml'))) {
-      info('Workspace detected, installing to root');
+      info('Workspaces detected, installing to root');
       args.push('-W');
     }
 
@@ -120,7 +115,7 @@ async function run() {
     });
 
     // Install dependencies
-    const autoInstall = getInput('auto-install') || true;
+    const autoInstall = getInput('auto-install');
 
     if (autoInstall) {
       await installPackages();
