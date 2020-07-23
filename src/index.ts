@@ -68,6 +68,7 @@ async function installPresetPackage(name: string, version: string) {
   // Yarn
   if (bin === 'yarn') {
     if ('workspaces' in getPackageJson()) {
+      info('Workspaces detected, installing to root');
       args.push('-W');
     }
 
@@ -76,6 +77,7 @@ async function installPresetPackage(name: string, version: string) {
     // PNPM
   } else if (bin === 'pnpm') {
     if (fs.existsSync(getPath('pnpm-workspace.yaml'))) {
+      info('Workspaces detected, installing to root');
       args.push('-W');
     }
 
