@@ -13,6 +13,9 @@ fi
 # Checkout branch
 git checkout "$1"
 
+# Rebase off master
+git rebase -i master
+
 # Build files
 yarn run build
 
