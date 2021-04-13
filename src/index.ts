@@ -40,6 +40,10 @@ function detectPackageManager() {
   return pm;
 }
 
+function isYarn2AndAbove(): boolean {
+  return fs.existsSync(getPath('.yarn')) || fs.existsSync(getPath('.yarnrc.yml'));
+}
+
 function getPackageJson(): object {
   return JSON.parse(fs.readFileSync(getPath('package.json'), 'utf8'));
 }
@@ -50,7 +54,9 @@ async function installPackages() {
   startGroup(`Installing dependencies with ${bin}`);
 
   if (bin === 'yarn' || bin === 'pnpm') {
-    await exec(bin, ['install', '--frozen-lockfile'], { cwd: CWD });
+    await exec(bin, ['install', isYarn2AndAbove() ? '--immutable' : '--frozen-lockfile'], {
+      cwd: CWD,
+    });
   } else {
     await exec('npm', ['ci'], { cwd: CWD });
   }
@@ -67,7 +73,7 @@ async function installPresetPackage(name: string, version: string) {
 
   // Yarn
   if (bin === 'yarn') {
-    if ('workspaces' in getPackageJson()) {
+    if ('workspaces' in getPackageJson() && !isYarn2AndAbove()) {
       info('Workspaces detected, installing to root');
       args.push('-W');
     }
