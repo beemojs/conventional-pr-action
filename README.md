@@ -25,7 +25,7 @@ jobs:
 
 Supports the following input options:
 
-- `auto-install` - Automatically install dependencies and the preset NPM package. Defaults to
+- `auto-install` - Automatically install dependencies and the preset npm package. Defaults to
   `true`.
 - `config-preset` - The conventional changelog config preset. Defaults to
   [`beemo`](https://github.com/beemojs/conventional-changelog-beemo).

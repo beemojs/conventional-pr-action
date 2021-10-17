@@ -6,8 +6,8 @@
   "scripts": {
     "prepare": "beemo create-config --silent",
     "build": "beemo typescript",
-    "eslint": "beemo eslint ./src",
-    "prettier": "beemo prettier",
+    "lint": "beemo eslint ./src",
+    "format": "beemo prettier",
     "type": "beemo typescript --noEmit",
     "test": "yarn run type && yarn run eslint"
   },
@@ -17,19 +17,8 @@
   "engines": {
     "node": ">=10.9.0"
   },
-  "beemo": {
-    "module": "@milesj/build-tools",
-    "drivers": [
-      "eslint",
-      "prettier",
-      "typescript"
-    ],
-    "settings": {
-      "node": true
-    }
-  },
   "devDependencies": {
-    "@milesj/build-tools": "^2.9.0"
+    "@beemo/dev": "^1.6.3"
   },
   "dependencies": {
     "@actions/core": "^1.2.7",
