@@ -35,3 +35,12 @@ tsconfig.json
 tsconfig.options.json
 webpack.config.js
 *.tsbuildinfo
+
+# Yarn
+.yarn/*
+!.yarn/patches
+!.yarn/releases
+!.yarn/plugins
+!.yarn/sdks
+!.yarn/versions
+.pnp.*
