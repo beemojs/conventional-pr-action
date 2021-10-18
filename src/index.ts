@@ -114,6 +114,17 @@ async function installPresetPackage(name: string, version: string) {
 	endGroup();
 }
 
+function isInputEnabled(name: string): boolean {
+	const value = getInput(name);
+
+	// getBooleanInput throws an error for undefined/empty values
+	if (!value) {
+		return false;
+	}
+
+	return getBooleanInput(name);
+}
+
 async function run() {
 	try {
 		info('Loading GitHub context and pull request');
@@ -137,11 +148,8 @@ async function run() {
 			pull_number: issue.number,
 		});
 
-		console.log('=', getInput('auto-install'));
-		console.log('b=', getBooleanInput('auto-install'));
-
 		// Install dependencies
-		const autoInstall = getBooleanInput('auto-install');
+		const autoInstall = isInputEnabled('auto-install');
 
 		if (autoInstall) {
 			await installPackages();
@@ -185,7 +193,7 @@ async function run() {
 		}
 
 		// Verify commit integrity
-		if (getBooleanInput('require-multiple-commits') && pr.commits < 2) {
+		if (isInputEnabled('require-multiple-commits') && pr.commits < 2) {
 			info('Checking for multiple commits');
 
 			const { data: commits } = await octokit.rest.pulls.listCommits({
