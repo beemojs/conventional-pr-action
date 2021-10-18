@@ -140,6 +140,9 @@ async function run() {
 		// Install dependencies
 		const autoInstall = getBooleanInput('auto-install');
 
+		console.log('=', getInput('auto-install'));
+		console.log('b=', getBooleanInput('auto-install'));
+
 		if (autoInstall) {
 			await installPackages();
 		}
