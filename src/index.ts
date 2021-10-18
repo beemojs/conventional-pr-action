@@ -47,10 +47,30 @@ function getPackageJson(): object {
 	return JSON.parse(fs.readFileSync(getPath('package.json'), 'utf8')) as object;
 }
 
+// This action may be configured in a non-JS project,
+// but we still want to support it. So create a fake package.json.
+function createPackageJson() {
+	const pkgPath = getPath('package.json');
+
+	if (!fs.existsSync(pkgPath)) {
+		fs.writeFileSync(
+			pkgPath,
+			JSON.stringify({
+				description: '',
+				name: 'conventional-pr-action-temporary-package',
+				version: '0.0.0',
+			}),
+			'utf8',
+		);
+	}
+}
+
 async function installPackages() {
 	const bin = detectPackageManager();
 
 	startGroup(`Installing dependencies with ${bin}`);
+
+	createPackageJson();
 
 	await (bin === 'yarn' || bin === 'pnpm'
 		? exec(bin, ['install', isYarn2AndAbove() ? '--immutable' : '--frozen-lockfile'], {
