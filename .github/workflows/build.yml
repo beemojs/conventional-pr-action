@@ -18,4 +18,6 @@ jobs:
         with:
           node-version: ${{ matrix.node-version }}
       - run: yarn install --immutable
+      - run: yarn prepare
+      - run: yarn build
       - run: yarn test

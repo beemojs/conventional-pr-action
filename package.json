@@ -4,8 +4,8 @@
   "description": "GitHub Action that validates the PR title against a Conventional Commits preset.",
   "main": "./lib/index.js",
   "scripts": {
-    "prepare": "beemo create-config --silent",
-    "build": "beemo typescript",
+    "prepare": "beemo create-config",
+    "build": "packemon build --addEngines",
     "lint": "beemo eslint ./src",
     "format": "beemo prettier",
     "type": "beemo typescript --noEmit",
@@ -15,12 +15,19 @@
   "author": "Miles Johnson",
   "license": "MIT",
   "engines": {
-    "node": ">=10.9.0"
+    "node": ">=10.3.0",
+    "npm": ">=6.1.0"
   },
+  "packageManager": "yarn@3.0.2",
+  "files": [
+    "lib/**/*.{js,map}",
+    "src/**/*.{ts,tsx,json}"
+  ],
   "devDependencies": {
     "@beemo/cli": "^2.0.3",
     "@beemo/core": "^2.1.1",
-    "@beemo/dev": "^1.6.3"
+    "@beemo/dev": "^1.6.3",
+    "packemon": "^1.6.0"
   },
   "dependencies": {
     "@actions/core": "^1.6.0",
@@ -29,5 +36,9 @@
     "conventional-changelog-preset-loader": "^2.3.4",
     "conventional-commits-parser": "^3.2.2"
   },
-  "packageManager": "yarn@3.0.2"
+  "packemon": {
+    "format": "lib",
+    "platform": "node",
+    "support": "legacy"
+  }
 }
