@@ -4,7 +4,7 @@ import fs from 'fs';
 import path from 'path';
 import loader from 'conventional-changelog-preset-loader';
 import parseCommit from 'conventional-commits-parser';
-import { endGroup, getInput, info, setFailed, startGroup } from '@actions/core';
+import { endGroup, getBooleanInput, getInput, info, setFailed, startGroup } from '@actions/core';
 import { exec } from '@actions/exec';
 import { context, getOctokit } from '@actions/github';
 
@@ -118,7 +118,7 @@ async function run() {
 		});
 
 		// Install dependencies
-		const autoInstall = getInput('auto-install');
+		const autoInstall = getBooleanInput('auto-install');
 
 		if (autoInstall) {
 			await installPackages();
@@ -162,7 +162,7 @@ async function run() {
 		}
 
 		// Verify commit integrity
-		if (getInput('require-multiple-commits') && pr.commits < 2) {
+		if (getBooleanInput('require-multiple-commits') && pr.commits < 2) {
 			info('Checking for multiple commits');
 
 			const { data: commits } = await octokit.rest.pulls.listCommits({
