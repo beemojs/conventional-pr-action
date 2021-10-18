@@ -1,7 +1,7 @@
 # conventional-pr-action
 
 GitHub Action that validates a pull request title against a
-[Conventional Commits](https://www.conventionalcommits.org) preset.
+[Conventional Commits](https://www.conventionalcommits.org) preset, for an npm project.
 
 ## Setup
 
