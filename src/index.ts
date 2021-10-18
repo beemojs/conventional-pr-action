@@ -112,7 +112,7 @@ async function run() {
 
 		// Load PR
 		const octokit = getOctokit(GITHUB_TOKEN);
-		const { data: pr } = await octokit.pulls.get({
+		const { data: pr } = await octokit.rest.pulls.get({
 			...context.repo,
 			pull_number: issue.number,
 		});
@@ -165,7 +165,7 @@ async function run() {
 		if (getInput('require-multiple-commits') && pr.commits < 2) {
 			info('Checking for multiple commits');
 
-			const { data: commits } = await octokit.pulls.listCommits({
+			const { data: commits } = await octokit.rest.pulls.listCommits({
 				...context.repo,
 				pull_number: issue.number,
 			});
