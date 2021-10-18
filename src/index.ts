@@ -137,11 +137,11 @@ async function run() {
 			pull_number: issue.number,
 		});
 
-		// Install dependencies
-		const autoInstall = getBooleanInput('auto-install');
-
 		console.log('=', getInput('auto-install'));
 		console.log('b=', getBooleanInput('auto-install'));
+
+		// Install dependencies
+		const autoInstall = getBooleanInput('auto-install');
 
 		if (autoInstall) {
 			await installPackages();
