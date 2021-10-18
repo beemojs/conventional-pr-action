@@ -4,7 +4,7 @@
   "description": "GitHub Action that validates the PR title against a Conventional Commits preset.",
   "main": "./lib/index.js",
   "scripts": {
-    "prepare": "beemo create-config --silent",
+    "prepare": "beemo create-config",
     "build": "packemon build --addEngines",
     "lint": "beemo eslint ./src",
     "format": "beemo prettier",
