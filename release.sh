@@ -16,6 +16,9 @@ git checkout "$1"
 # Rebase off master
 git rebase -i master
 
+# Install deps
+yarn install
+
 # Build files
 yarn run build
 
@@ -23,7 +26,7 @@ yarn run build
 rm -rf ./node_modules
 
 # Only install prod deps
-yarn install --production
+yarn workspaces focus --all --production
 
 # Add files to git
 git add -f ./lib ./node_modules
