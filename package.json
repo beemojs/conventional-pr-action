@@ -9,7 +9,7 @@
     "lint": "beemo eslint ./src",
     "format": "beemo prettier",
     "type": "beemo typescript --noEmit",
-    "test": "yarn run type && yarn run lint"
+    "check": "yarn run type && yarn run lint"
   },
   "repository": "https://github.com/beemojs/conventional-pr-action",
   "author": "Miles Johnson",
@@ -24,9 +24,9 @@
     "src/**/*.{ts,tsx,json}"
   ],
   "devDependencies": {
-    "@beemo/cli": "^2.0.3",
-    "@beemo/core": "^2.1.1",
-    "@beemo/dev": "^1.6.3",
+    "@beemo/cli": "^2.0.6",
+    "@beemo/core": "^2.1.4",
+    "@beemo/dev": "^1.7.8",
     "packemon": "^1.6.0"
   },
   "dependencies": {
@@ -34,7 +34,7 @@
     "@actions/exec": "^1.1.0",
     "@actions/github": "^5.0.0",
     "conventional-changelog-preset-loader": "^2.3.4",
-    "conventional-commits-parser": "^3.2.2"
+    "conventional-commits-parser": "^3.2.4"
   },
   "packemon": {
     "format": "lib",
