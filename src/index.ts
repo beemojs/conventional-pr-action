@@ -76,7 +76,7 @@ async function installPackages() {
 		? exec(bin, ['install', isYarn2AndAbove() ? '--immutable' : '--frozen-lockfile'], {
 				cwd: CWD,
 		  })
-		: exec('npm', ['ci'], { cwd: CWD }));
+		: exec('npm', ['install'], { cwd: CWD }));
 
 	endGroup();
 }
