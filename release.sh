@@ -10,6 +10,9 @@ if [ "$2" == "" ]; then
     exit
 fi
 
+# Remove all deps to make rebasing easier
+rm -rf ./node_modules
+
 # Checkout branch
 git checkout "$1"
 
@@ -21,9 +24,6 @@ yarn install
 
 # Build files
 yarn run build
-
-# Remove all deps
-rm -rf ./node_modules
 
 # Only install prod deps
 yarn workspaces focus --all --production
