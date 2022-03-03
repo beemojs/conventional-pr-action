@@ -1,0 +1,15 @@
+{{#if isMajor~}}
+  #
+{{~else if isMinor~}}
+  ##
+{{~else~}}
+  ###
+{{~/if}} {{version}}{{#if date}} - {{date}}{{/if}}
+{{#if noteGroups}}
+{{#each noteGroups}}
+{{#each notes}}
+
+{{text}}
+{{/each}}
+{{/each}}
+{{/if}}

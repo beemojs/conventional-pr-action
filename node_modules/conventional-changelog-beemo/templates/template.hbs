@@ -1,0 +1,13 @@
+{{> header}}
+
+{{#each commitGroups}}
+#### {{lookup @root.groupEmojis title}} {{title}}
+
+{{#each commits}}
+{{> commit root=@root}}
+
+{{/each}}
+
+{{/each}}
+
+{{> footer}}

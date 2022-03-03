@@ -1,0 +1,31 @@
+---
+to: packages/<%= name %>/package.json
+---
+{
+  "name": "@<%= repo %>/<%= name %>",
+  "version": "0.0.0",
+  "description": "",
+  "keywords": [],
+  "scripts": {},
+  "main": "./lib/index.js",
+  "types": "./dts/index.d.ts",
+  "sideEffects": false,
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:<%= owner %>/<%= repo %>.git",
+    "directory": "packages/<%= name %>"
+  },
+  "license": "MIT",
+  "publishConfig": {
+    "access": "public"
+  },
+  "dependencies": {},
+  "devDependencies": {},
+  "peerDependencies": {},
+  <% if (owner === 'milesj') { %>
+  "funding": {
+    "type": "ko-fi",
+    "url": "https://ko-fi.com/milesjohnson"
+  },
+  <% } %>
+}

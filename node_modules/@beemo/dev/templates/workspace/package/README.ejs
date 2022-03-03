@@ -1,0 +1,8 @@
+---
+to: packages/<%= name %>/README.md
+---
+# <%= h.changeCase.titleCase(name) %>
+
+[![Build Status](https://github.com/<%= owner %>/<%= repo %>/workflows/Build/badge.svg)](https://github.com/<%= owner %>/<%= repo %>/actions?query=branch%3Amaster)
+[![npm version](https://badge.fury.io/js/%40<%= repo %>%2F<%= name %>.svg)](https://www.npmjs.com/package/@<%= repo %>/<%= name %>)
+[![npm deps](https://david-dm.org/<%= owner %>/<%= repo %>.svg?path=packages/<%= name %>)](https://www.npmjs.com/package/@<%= repo %>/<%= name %>)
