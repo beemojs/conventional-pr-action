@@ -18,7 +18,7 @@
     "node": ">=10.3.0",
     "npm": ">=6.1.0"
   },
-  "packageManager": "yarn@3.0.2",
+  "packageManager": "yarn@3.2.0",
   "files": [
     "lib/**/*.{js,map}",
     "src/**/*.{ts,tsx,json}"
