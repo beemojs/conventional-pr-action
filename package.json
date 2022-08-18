@@ -30,7 +30,7 @@
     "packemon": "^1.14.0"
   },
   "dependencies": {
-    "@actions/core": "^1.6.0",
+    "@actions/core": "^1.9.1",
     "@actions/exec": "^1.1.0",
     "@actions/github": "^5.0.0",
     "conventional-changelog-preset-loader": "^2.3.4",
