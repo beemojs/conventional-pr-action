@@ -75,7 +75,7 @@ async function installPackages() {
 	await (bin === 'yarn' || bin === 'pnpm'
 		? exec(bin, ['install', isYarn2AndAbove() ? '--immutable' : '--frozen-lockfile'], {
 				cwd: CWD,
-		  })
+			})
 		: exec('npm', ['install'], { cwd: CWD }));
 
 	endGroup();

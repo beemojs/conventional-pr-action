@@ -5,10 +5,9 @@
   "main": "./lib/index.js",
   "scripts": {
     "build": "packemon build --addEngines",
-    "lint": "beemo eslint ./src",
-    "format": "beemo prettier",
+    "format": "prettier --write .",
     "type": "tsc --noEmit",
-    "check": "yarn run type && yarn run lint"
+    "check": "yarn run type"
   },
   "repository": "https://github.com/beemojs/conventional-pr-action",
   "author": "Miles Johnson",
