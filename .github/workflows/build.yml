@@ -10,7 +10,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        node-version: [16, 18, 20]
+        node-version: [18, 20]
       fail-fast: true
     steps:
       - uses: actions/checkout@v4
@@ -18,6 +18,5 @@ jobs:
         with:
           node-version: ${{ matrix.node-version }}
       - run: yarn install --immutable
-      - run: yarn prepare
       - run: yarn build
       - run: yarn check
