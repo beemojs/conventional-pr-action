@@ -2,8 +2,12 @@
 
 import fs from 'fs';
 import path from 'path';
-import loader from 'conventional-changelog-preset-loader';
-import parseCommit from 'conventional-commits-parser';
+import {
+	createPresetLoader,
+	type UnknownModule,
+	type UnknownPreset,
+} from 'conventional-changelog-preset-loader';
+import { CommitParser, type ParserOptions } from 'conventional-commits-parser';
 import { endGroup, getBooleanInput, getInput, info, setFailed, startGroup } from '@actions/core';
 import { exec } from '@actions/exec';
 import { context, getOctokit } from '@actions/github';
@@ -18,7 +22,7 @@ function getPath(part: string): string {
 // The action has a separate node modules than the repository,
 // so we need to require from the repository's node modules
 // using CWD, otherwise the module is not found.
-async function requireModule(name: string): Promise<unknown> {
+async function requireModule<T>(name: string): Promise<UnknownModule<T>> {
 	return import(resolve.sync(getPath('node_modules'), name) as string);
 }
 
@@ -172,11 +176,11 @@ async function run() {
 		// Load preset
 		info('Loading preset package');
 
-		const loadPreset = loader.presetLoader(requireModule);
-		let config: ReturnType<typeof loadPreset>;
+		const loadPreset = createPresetLoader(requireModule);
+		let config: UnknownPreset;
 
 		try {
-			config = loadPreset(preset);
+			config = await loadPreset(preset);
 		} catch {
 			throw new Error(`Preset "${presetModule}" does not exist.`);
 		}
@@ -184,12 +188,13 @@ async function run() {
 		// Verify the PR title against the preset
 		info('Validating pull request against preset');
 
+		const parser = new CommitParser(config.parserOpts as ParserOptions);
 		let result = null;
 
 		result =
 			typeof config.checkCommitFormat === 'function'
 				? config.checkCommitFormat(pr.title)
-				: parseCommit.sync(pr.title, config.parserOpts);
+				: parser.parse(pr.title);
 
 		if (!result || !result.type) {
 			throw new Error("PR title doesn't follow conventional changelog format.");

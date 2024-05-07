@@ -5,3 +5,4 @@
 - Updated dependencies.
   - `@actions/github` v5 -> v6
   - `conventional-commits-parser` v3 -> v6
+  - `conventional-changelog-preset-loader` v2 -> v5

@@ -2846,10 +2846,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"conventional-changelog-preset-loader@npm:^2.3.4":
-  version: 2.3.4
-  resolution: "conventional-changelog-preset-loader@npm:2.3.4"
-  checksum: 23a889b7fcf6fe7653e61f32a048877b2f954dcc1e0daa2848c5422eb908e6f24c78372f8d0d2130b5ed941c02e7010c599dccf44b8552602c6c8db9cb227453
+"conventional-changelog-preset-loader@npm:^5.0.0":
+  version: 5.0.0
+  resolution: "conventional-changelog-preset-loader@npm:5.0.0"
+  checksum: 7630c2826b43f8f546f0575b46d3eb8c2ac2b5bcfae60b7d1186e9a87f07b7a689d9463afc125a40ab84a030574c9ce7965dd96e6506323e5a7d1ac2b9f2df19
   languageName: node
   linkType: hard
 
@@ -2873,7 +2873,7 @@ __metadata:
     "@actions/github": ^6.0.0
     "@moonrepo/dev": ^3.0.0
     "@types/node": ^20.12.10
-    conventional-changelog-preset-loader: ^2.3.4
+    conventional-changelog-preset-loader: ^5.0.0
     conventional-commits-parser: ^6.0.0
     enhanced-resolve: ^5.16.1
     packemon: ^4.0.1

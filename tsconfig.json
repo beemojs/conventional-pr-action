@@ -1,4 +1,7 @@
 {
   "$schema": "https://json.schemastore.org/tsconfig",
-  "extends": "tsconfig-moon/tsconfig.json"
+  "extends": "tsconfig-moon/tsconfig.json",
+  "compilerOptions": {
+    "moduleResolution": "Bundler"
+  }
 }
