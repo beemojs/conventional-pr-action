@@ -10,3 +10,5 @@ jobs:
       - run: yarn install --immutable
       - run: yarn build
       - uses: ./ # self
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
