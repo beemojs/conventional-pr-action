@@ -21,14 +21,16 @@ function requireModule(name: string) {
 	return require(require.resolve(name, { paths: [getPath('node_modules')] })) as unknown;
 }
 
-let pm: 'npm' | 'pnpm' | 'yarn';
+let pm: 'npm' | 'pnpm' | 'yarn' | 'bun';
 
 function detectPackageManager() {
 	if (pm) {
 		return pm;
 	}
 
-	if (fs.existsSync(getPath('yarn.lock'))) {
+	if (fs.existsSync(getPath('bun.lockb'))) {
+		pm = 'bun';
+	} else if (fs.existsSync(getPath('yarn.lock'))) {
 		pm = 'yarn';
 	} else if (fs.existsSync(getPath('pnpm-lock.yaml'))) {
 		pm = 'pnpm';
@@ -72,11 +74,7 @@ async function installPackages() {
 
 	createPackageJson();
 
-	await (bin === 'yarn' || bin === 'pnpm'
-		? exec(bin, ['install', isYarn2AndAbove() ? '--immutable' : '--frozen-lockfile'], {
-				cwd: CWD,
-			})
-		: exec('npm', ['install'], { cwd: CWD }));
+	await exec(bin, ['install'], { cwd: CWD });
 
 	endGroup();
 }
@@ -105,6 +103,10 @@ async function installPresetPackage(name: string, version: string) {
 		}
 
 		await exec('pnpm', args, { cwd: CWD });
+
+		// npm
+	} else if (bin === 'bun') {
+		await exec('bun', args, { cwd: CWD });
 
 		// npm
 	} else {
