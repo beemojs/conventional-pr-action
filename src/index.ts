@@ -23,7 +23,10 @@ function getPath(part: string): string {
 // so we need to require from the repository's node modules
 // using CWD, otherwise the module is not found.
 async function requireModule<T>(name: string): Promise<UnknownModule<T>> {
-	return import(resolve.sync(getPath('node_modules'), name) as string);
+	console.log(getPath('node_modules'), name);
+	const result = await import(resolve.sync(getPath('node_modules'), name) as string);
+	console.log(result);
+	return result;
 }
 
 let pm: 'npm' | 'pnpm' | 'yarn' | 'bun';
@@ -181,7 +184,8 @@ async function run() {
 
 		try {
 			config = await loadPreset(preset);
-		} catch {
+		} catch (error) {
+			console.error(error);
 			throw new Error(`Preset "${presetModule}" does not exist.`);
 		}
 
