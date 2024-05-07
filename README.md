@@ -6,7 +6,7 @@ GitHub Action that validates a pull request title against a
 ## Setup
 
 Create a `.github/workflows/pr.yml` file in your repository with the following contents. The
-`GITHUB_TOKEN` environment variable and v2 actions _are_ required.
+`GITHUB_TOKEN` environment variable and latest actions _are_ required.
 
 ```yaml
 name: PR
@@ -16,9 +16,9 @@ jobs:
     name: Conventional PR
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
-      - uses: actions/setup-node@v2
-      - uses: beemojs/conventional-pr-action@v2
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+      - uses: beemojs/conventional-pr-action@v3
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 ```
@@ -41,7 +41,7 @@ Conventional commits require a changelog preset, and this action defaults to
 like to use another preset, update the `config-preset` option.
 
 ```yaml
-- uses: beemojs/conventional-pr-action@v2
+- uses: beemojs/conventional-pr-action@v3
   with:
     config-preset: eslint
 ```
@@ -62,7 +62,7 @@ If you don't want to use automatic installation, you'll need to disable the `aut
 and add your chosen preset manually to `devDependencies` in the root `package.json`.
 
 ```yaml
-- uses: beemojs/conventional-pr-action@v2
+- uses: beemojs/conventional-pr-action@v3
   with:
     auto-install: false
 ```

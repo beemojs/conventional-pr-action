@@ -1,6 +1,6 @@
 {
   "name": "conventional-pr-action",
-  "version": "2.0.0",
+  "version": "3.0.0",
   "description": "GitHub Action that validates the PR title against a Conventional Commits preset.",
   "main": "./lib/index.js",
   "scripts": {
@@ -12,14 +12,10 @@
   "repository": "https://github.com/beemojs/conventional-pr-action",
   "author": "Miles Johnson",
   "license": "MIT",
-  "engines": {
-    "node": ">=10.3.0",
-    "npm": ">=6.1.0"
-  },
   "packageManager": "yarn@3.2.0",
   "files": [
-    "lib/**/*.{js,map}",
-    "src/**/*.{ts,tsx,json}"
+    "lib/**/*",
+    "src/**/*"
   ],
   "devDependencies": {
     "@moonrepo/dev": "^3.0.0",
@@ -39,7 +35,9 @@
   },
   "packemon": {
     "format": "lib",
-    "platform": "node",
-    "support": "legacy"
+    "platform": "node"
+  },
+  "engines": {
+    "node": ">=18.12.0"
   }
 }
