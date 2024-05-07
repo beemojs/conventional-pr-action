@@ -4,11 +4,10 @@
   "description": "GitHub Action that validates the PR title against a Conventional Commits preset.",
   "main": "./lib/index.js",
   "scripts": {
-    "prepare": "beemo create-config",
     "build": "packemon build --addEngines",
     "lint": "beemo eslint ./src",
     "format": "beemo prettier",
-    "type": "beemo typescript --noEmit",
+    "type": "tsc --noEmit",
     "check": "yarn run type && yarn run lint"
   },
   "repository": "https://github.com/beemojs/conventional-pr-action",
@@ -24,15 +23,18 @@
     "src/**/*.{ts,tsx,json}"
   ],
   "devDependencies": {
-    "@beemo/cli": "^2.0.6",
-    "@beemo/core": "^2.1.4",
-    "@beemo/dev": "^1.7.8",
-    "packemon": "^1.14.0"
+    "@moonrepo/dev": "^3.0.0",
+    "@types/node": "^20.12.10",
+    "packemon": "^4.0.1",
+    "prettier": "^3.2.5",
+    "prettier-config-moon": "^1.1.2",
+    "tsconfig-moon": "^1.3.0",
+    "typescript": "^5.4.5"
   },
   "dependencies": {
-    "@actions/core": "^1.6.0",
-    "@actions/exec": "^1.1.0",
-    "@actions/github": "^5.0.0",
+    "@actions/core": "^1.10.1",
+    "@actions/exec": "^1.1.1",
+    "@actions/github": "^6.0.0",
     "conventional-changelog-preset-loader": "^2.3.4",
     "conventional-commits-parser": "^3.2.4"
   },
