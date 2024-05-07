@@ -29,7 +29,7 @@ yarn run build
 yarn workspaces focus --all --production
 
 # Add files to git
-git add -f ./lib ./node_modules
+git add -f ./mjs ./node_modules
 
 # Commit modules
 git commit -m "Update $1 for v$2"

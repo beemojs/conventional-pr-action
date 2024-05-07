@@ -15,6 +15,7 @@ coverage/
 dist/
 esm/
 lib/
+mjs/
 tmp/
 node_modules/
 

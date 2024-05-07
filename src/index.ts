@@ -7,6 +7,7 @@ import parseCommit from 'conventional-commits-parser';
 import { endGroup, getBooleanInput, getInput, info, setFailed, startGroup } from '@actions/core';
 import { exec } from '@actions/exec';
 import { context, getOctokit } from '@actions/github';
+import resolve from 'enhanced-resolve';
 
 const CWD = process.env.GITHUB_WORKSPACE!;
 
@@ -17,8 +18,8 @@ function getPath(part: string): string {
 // The action has a separate node modules than the repository,
 // so we need to require from the repository's node modules
 // using CWD, otherwise the module is not found.
-function requireModule(name: string) {
-	return require(require.resolve(name, { paths: [getPath('node_modules')] })) as unknown;
+async function requireModule(name: string): Promise<unknown> {
+	return import(resolve.sync(getPath('node_modules'), name) as string);
 }
 
 let pm: 'npm' | 'pnpm' | 'yarn' | 'bun';

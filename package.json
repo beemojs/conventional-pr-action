@@ -2,7 +2,7 @@
   "name": "conventional-pr-action",
   "version": "3.0.0",
   "description": "GitHub Action that validates the PR title against a Conventional Commits preset.",
-  "main": "./lib/index.js",
+  "main": "./mjs/index.mjs",
   "scripts": {
     "build": "packemon build --addEngines",
     "format": "prettier --write .",
@@ -14,7 +14,7 @@
   "license": "MIT",
   "packageManager": "yarn@3.2.0",
   "files": [
-    "lib/**/*",
+    "mjs/**/*",
     "src/**/*"
   ],
   "devDependencies": {
@@ -31,10 +31,11 @@
     "@actions/exec": "^1.1.1",
     "@actions/github": "^6.0.0",
     "conventional-changelog-preset-loader": "^2.3.4",
-    "conventional-commits-parser": "^3.2.4"
+    "conventional-commits-parser": "^6.0.0",
+    "enhanced-resolve": "^5.16.1"
   },
   "packemon": {
-    "format": "lib",
+    "format": "mjs",
     "platform": "node"
   },
   "engines": {
