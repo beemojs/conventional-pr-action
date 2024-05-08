@@ -25,9 +25,7 @@ function getPath(part: string): string {
 async function requireModule<T>(name: string): Promise<UnknownModule<T>> {
 	const result = await import(resolve.sync(getPath('node_modules'), name) as string);
 
-	if (result.__esModule && typeof result.default === 'function') {
-		return result.default;
-	}
+	console.log(result);
 
 	return result;
 }
