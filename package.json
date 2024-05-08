@@ -19,7 +19,7 @@
   ],
   "devDependencies": {
     "@moonrepo/dev": "^3.0.0",
-    "@types/node": "^20.12.10",
+    "@types/node": "^20.12.11",
     "packemon": "^4.0.1",
     "prettier": "^3.2.5",
     "prettier-config-moon": "^1.1.2",
