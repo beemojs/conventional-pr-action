@@ -23,11 +23,7 @@ function getPath(part: string): string {
 // so we need to require from the repository's node modules
 // using CWD, otherwise the module is not found.
 async function requireModule<T>(name: string): Promise<UnknownModule<T>> {
-	const result = await import(resolve.sync(getPath('node_modules'), name) as string);
-
-	console.log(result);
-
-	return result;
+	return import(resolve.sync(getPath('node_modules'), name) as string);
 }
 
 let pm: 'npm' | 'pnpm' | 'yarn' | 'bun';
@@ -195,12 +191,7 @@ async function run() {
 		info('Validating pull request against preset');
 
 		const parser = new CommitParser(config.parserOpts as ParserOptions);
-		let result = null;
-
-		result =
-			typeof config.checkCommitFormat === 'function'
-				? config.checkCommitFormat(pr.title)
-				: parser.parse(pr.title);
+		const result = parser.parse(pr.title);
 
 		if (!result || !result.type) {
 			throw new Error("PR title doesn't follow conventional changelog format.");
