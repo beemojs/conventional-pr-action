@@ -174,14 +174,13 @@ async function run() {
 		}
 
 		// Load preset
-		info('Loading preset package');
+		info(`Loading preset package ${presetModule}`);
 
 		const loadPreset = createPresetLoader(requireModule);
 		let config: UnknownPreset;
 
 		try {
 			config = await loadPreset(preset);
-			console.log(config);
 		} catch (error) {
 			console.error(error);
 			throw new Error(`Preset "${presetModule}" does not exist.`);
