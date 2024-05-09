@@ -4,7 +4,7 @@ inputs:
   auto-install:
     description: 'Auto-install dependencies and the conventional changelog config package.'
     required: false
-    default: true
+    default: 'true'
   config-preset:
     description: 'Name of conventional changelog config preset.'
     required: false
@@ -16,10 +16,10 @@ inputs:
   require-multiple-commits:
     description: 'Squash merges require multiple commits for the PR title to be preserved.'
     required: false
-    default: false
+    default: 'false'
 runs:
-  using: 'node16'
-  main: 'lib/index.js'
+  using: 'node20'
+  main: 'mjs/index.mjs'
 branding:
   icon: 'git-pull-request'
   color: 'red'

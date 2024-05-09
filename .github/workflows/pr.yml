@@ -5,12 +5,10 @@ jobs:
     name: Conventional PR
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
-      - uses: actions/setup-node@v2
-      - uses: beemojs/conventional-pr-action@v2
-        # - run: yarn install --immutable
-        # - run: yarn prepare
-        # - run: yarn build
-        # - run: node ./lib/index.js
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+      - run: yarn install --immutable
+      - run: yarn build
+      - uses: ./ # self
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
